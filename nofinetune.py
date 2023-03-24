@@ -395,7 +395,7 @@ def main():
                 print('query: ',row['title'])
                 prompt_line_tokens = tokenizer(row['source'].lower(), max_length = 300, return_tensors = "pt", truncation = True)
                 generated_ids = bart_model.generate(
-                    prompt_line_tokens["input_ids"],
+                    decoder_input_ids=prompt_line_tokens["input_ids"],
                     attention_mask=prompt_line_tokens["attention_mask"],
                     use_cache=True,
                     decoder_start_token_id = tokenizer.pad_token_id,
