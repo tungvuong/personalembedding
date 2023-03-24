@@ -386,7 +386,7 @@ def main():
             
             pred_df = pd.read_csv('./prevdoc/'+filename)[splitindex:]
             for index, row in pred_df.iterrows():
-                if (index >= pred_index[0]):
+                if (index < pred_index[0]):
                     continue
                 print()
                 print(index+2)
