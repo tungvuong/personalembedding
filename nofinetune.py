@@ -398,7 +398,7 @@ def main():
                     prompt_line_tokens["input_ids"],
                     attention_mask=prompt_line_tokens["attention_mask"],
                     use_cache=True,
-                    decoder_start_token_id = self.tokenizer.pad_token_id,
+                    decoder_start_token_id = tokenizer.pad_token_id,
                     num_beams= eval_beams,
                     max_length = max_len,
                     min_length = 50,
