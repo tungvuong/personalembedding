@@ -372,7 +372,7 @@ def main():
     suggestions = {}
     with open('./queryindex.json') as json_file:
         queryindex = json.load(json_file)
-    for filename in os.listdir("./personalembedding/prevdoc"):
+    for filename in os.listdir("./prevdoc"):
         if filename.endswith(".csv"):
             user = filename.replace('.csv','')
             suggestions[user] = []
