@@ -400,8 +400,8 @@ def main():
                     use_cache=True,
                     decoder_start_token_id = tokenizer.pad_token_id,
                     num_beams= 4,
-#                    max_length = 500,
-#                    min_length = 50,
+                    max_length = 500,
+                    min_length = 50,
                     early_stopping = True,
                 )
                 pred_target = [tokenizer.decode(w, skip_special_tokens=True, clean_up_tokenization_spaces=True) for w in generated_ids]
