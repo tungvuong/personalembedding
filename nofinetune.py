@@ -393,18 +393,9 @@ def main():
                 print('target',row['target'][:250])
                 print('source',row['source'][:250])
                 print('query: ',row['title'])
-                prompt_line_tokens = tokenizer(row['source'].lower(), max_length = 300, return_tensors = "pt", truncation = True)
-                generated_ids = bart_model.generate(
-                    decoder_input_ids=prompt_line_tokens["input_ids"],
-                    attention_mask=prompt_line_tokens["attention_mask"],
-                    use_cache=True,
-                    decoder_start_token_id = tokenizer.pad_token_id,
-                    num_beams= 4,
-                    max_length = 500,
-                    min_length = 50,
-                    early_stopping = True,
-                )
-                pred_target = [tokenizer.decode(w, skip_special_tokens=True, clean_up_tokenization_spaces=True) for w in generated_ids]
+                decoder_inputs = tokenizer([row['source'].lower()], max_length=1024, return_tensors='pt')
+                summary_ids = bart_model.generate(decoder_input_ids = decoder_inputs['input_ids'],  num_beams=4, max_length=150, min_length=100,early_stopping=True)
+                pred_target=[tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]
                 print(pred_target)
                 suggestions[user].append([row['title'],row['target'],pred_target,row['source'],index+2])
 #        with open('./embeddings.json', 'w') as outfile:
