@@ -410,20 +410,20 @@ def main():
 
             # Fit the instantiated model to the data
             trainer.fit(model, summary_data)
-#            pred_df = pd.read_csv('./prevdoc/'+filename)[splitindex:]
-#            for index, row in pred_df.iterrows():
-#                if (index < pred_index[0]):
-#                    continue
-#                print()
-#                print(index+2)
-#                print('target',row['target'][:250])
-#                print('source',row['source'])
-#                print('query: ',row['title'])
-#                pred_target = generate_lyrics(seed_line = row['source'], num_lines = 2, model_ = model,
-#                                       noise_percent = 0.25, multiple_lines = True, max_line_history = 2)
-#                suggestions[user].append([row['title'],row['target'],pred_target,row['source'],index+2])
-#        with open('./embeddings.json', 'w') as outfile:
-#            json.dump(suggestions, outfile)
+            pred_df = pd.read_csv('./prevdoc/'+filename)[splitindex:]
+            for index, row in pred_df.iterrows():
+                if (index < pred_index[0]):
+                    continue
+                print()
+                print(index+2)
+                print('target',row['target'][:250])
+                print('source',row['source'][:250])
+                print('query: ',row['title'])
+                pred_target = generate_lyrics(seed_line = row['source'], num_lines = 2, model_ = model,
+                                       noise_percent = 0.25, multiple_lines = True, max_line_history = 2)
+                suggestions[user].append([row['title'],row['target'],pred_target,row['source'],index+2])
+        with open('./embeddings.json', 'w') as outfile:
+            json.dump(suggestions, outfile)
 
 if __name__ == '__main__':
     # freeze_support() here if program needs to be frozen
