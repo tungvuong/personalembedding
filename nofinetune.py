@@ -370,11 +370,19 @@ def rankings(query,out_dict):
 def main():
     torch.cuda.empty_cache()
     suggestions = {}
+    try:
+        with open('./nofinetune_embeddings.json', 'r') as f:
+            userindex = json.load(f)
+        suggestions = userindex
+    except:
+        print('FILE NOT FOUND')
     with open('./queryindex.json') as json_file:
         queryindex = json.load(json_file)
     for filename in os.listdir("./prevdoc"):
         if filename.endswith(".csv"):
             user = filename.replace('.csv','')
+            if user in userindex.keys():
+                continue
             suggestions[user] = []
             ratio = 0.7
             if user in ['D43D7EC3E0C2']:
