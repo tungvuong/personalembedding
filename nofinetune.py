@@ -372,8 +372,8 @@ def main():
     suggestions = {}
     try:
         with open('./nofinetune_embeddings.json', 'r') as f:
-            userindex = json.load(f)
-        suggestions = userindex
+            suggestions = json.load(f)
+        print(suggestions.keys())
     except:
         print('FILE NOT FOUND')
     with open('./queryindex.json') as json_file:
@@ -381,7 +381,7 @@ def main():
     for filename in os.listdir("./prevdoc"):
         if filename.endswith(".csv"):
             user = filename.replace('.csv','')
-            if user in userindex.keys():
+            if user in suggestions.keys():
                 continue
             suggestions[user] = []
             ratio = 0.7
