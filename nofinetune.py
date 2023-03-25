@@ -391,10 +391,10 @@ def main():
                 print()
                 print(index+2)
                 print('target',row['target'][:250])
-                print('source',row['source'][:250])
+                print('source',row['source'])
                 print('query: ',row['title'])
-                decoder_inputs = tokenizer([row['source'].lower()], max_length=1024, return_tensors='pt')
-                summary_ids = bart_model.generate(decoder_input_ids = decoder_inputs['input_ids'],  num_beams=4, max_length=150, min_length=100,early_stopping=True)
+                decoder_inputs = tokenizer([row['source'].lower()], max_length=100, return_tensors='pt')
+                summary_ids = bart_model.generate(decoder_input_ids = decoder_inputs['input_ids'],  num_beams=4, max_length=500, min_length=100,early_stopping=True)
                 pred_target=[tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]
                 print(pred_target)
                 suggestions[user].append([row['title'],row['target'],pred_target,row['source'],index+2])
