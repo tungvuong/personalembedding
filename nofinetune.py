@@ -398,7 +398,7 @@ def main():
                 pred_target=[tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]
                 print(pred_target)
                 suggestions[user].append([row['title'],row['target'],pred_target,row['source'],index+2])
-        with open('./embeddings.json', 'w') as outfile:
+        with open('./nofinetune_embeddings.json', 'w') as outfile:
             json.dump(suggestions, outfile)
 
 if __name__ == '__main__':
