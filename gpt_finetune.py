@@ -179,10 +179,10 @@ def generate(
     return generated_list
 
 #Function to generate multiple sentences. Test data should be a dataframe
-def text_generation(test_data):
+def text_generation(test_data, finetunemodel, tokenizer):
     generated_lyrics = []
     for i in range(len(test_data)):
-        x = generate(model.to('cpu'), tokenizer, test_data['Lyric'][i], entry_count=1)
+        x = generate(finetunemodel.to('cpu'), tokenizer, test_data['Lyric'][i], entry_count=1)
         generated_lyrics.append(x)
     return generated_lyrics
      
@@ -238,13 +238,19 @@ def main():
             test_set['True_end_lyrics'] = test_set['Lyric'].str.split().str[-20:].apply(' '.join)
             test_set['Lyric'] = test_set['Lyric'].str.split().str[:-20].apply(' '.join)
             
-            #Train the model on the specific data we have
-            finetunemodel = train(dataset, model, tokenizer)
+            ckpt_dir = './checkpoint_files_2/'+user+'_gpt.pt'
+            if exists(ckpt_dir):
+                finetunemodel = torch.load('./checkpoint_files_2/'+user+'_gpt.pt')
+            else:
+                #Train the model on the specific data we have
+                finetunemodel = train(dataset, model, tokenizer)
+
+                #Save the model to a pkl or something so it can be reused later on
+                torch.save(finetunemodel,  './checkpoint_files_2/'+user+'_gpt.pt')
+
+                finetunemodel = torch.load('./checkpoint_files_2/'+user+'_gpt.pt')
             
-            #Save the model to a pkl or something so it can be reused later on
-            torch.save(model,  './checkpoint_files_2/'+user+'_embeddings.pt')
-            
-            generated_lyrics = text_generation(test_set)
+            generated_lyrics = text_generation(test_set,finetunemodel,tokenizer)
             
             #Loop to keep only generated text and add it as a new column in the dataframe
             my_generations=[]
