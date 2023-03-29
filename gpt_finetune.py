@@ -256,8 +256,9 @@ def main():
             my_generations=[]
 
             for i in range(len(generated_lyrics)):
-                a = test_set['Lyric'][i].split()[-30:] #Get the matching string we want (30 words)
-                b = ' '.join(a)
+#                a = test_set['Lyric'][i].split()[-30:] #Get the matching string we want (30 words)
+#                b = ' '.join(a)
+                b = test_set['Lyric'][i][:250]
                 c = ' '.join(generated_lyrics[i]) #Get all that comes after the matching string
                 my_generations.append(c.split(b)[-1])
 
