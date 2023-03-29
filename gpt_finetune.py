@@ -218,7 +218,7 @@ def main():
             
             
             #Create a very small test set to compare generated text with the reality
-            test_set = df.sample(n = 500)
+            test_set = df.sample(n = 100)
             df = df.loc[~df.index.isin(test_set.index)]
 
             #Reset the indexes
