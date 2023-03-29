@@ -239,8 +239,8 @@ def main():
 #            test_set['Lyric'] = test_set['Lyric'].str.split().str[:-20].apply(' '.join)
             df1 = pd.read_csv("./prevdoc/"+filename)
             df1 = df1.loc[~df1.index.isin(test_set.index)]
-            test_set['True_end_lyrics'] = [row[:250] for row in df1['target']]
-            test_set['Lyric'] = [row[:250] for row in df1['source']]
+            test_set['True_end_lyrics'] = [df1['target'][i][:250] for i in range(len(df1))]
+            test_set['Lyric'] = [df1['source'][i][:250] for i in range(len(df1))]
             
             ckpt_dir = './checkpoint_files_2/'+user+'_gpt.pt'
             if exists(ckpt_dir):
