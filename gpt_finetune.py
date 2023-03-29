@@ -235,8 +235,10 @@ def main():
 
             
             #For the test set only, keep last 20 words in a new column, then remove them from original column
-            test_set['True_end_lyrics'] = test_set['Lyric'].str.split().str[-20:].apply(' '.join)
-            test_set['Lyric'] = test_set['Lyric'].str.split().str[:-20].apply(' '.join)
+#            test_set['True_end_lyrics'] = test_set['Lyric'].str.split().str[-20:].apply(' '.join)
+#            test_set['Lyric'] = test_set['Lyric'].str.split().str[:-20].apply(' '.join)
+            test_set['True_end_lyrics'] = [row[:250] for row in df['target']]
+            test_set['Lyric'] = [row[:250] for row in df['source']]
             
             ckpt_dir = './checkpoint_files_2/'+user+'_gpt.pt'
             if exists(ckpt_dir):
@@ -260,7 +262,8 @@ def main():
 #                b = ' '.join(a)
                 b = test_set['Lyric'][i][:250]
                 c = ' '.join(generated_lyrics[i]) #Get all that comes after the matching string
-                my_generations.append(c.split(b)[-1])
+#                my_generations.append(c.split(b)[-1])
+                my_generations.append(generated_lyrics[i])
 
             test_set['Generated_lyrics'] = my_generations
             
