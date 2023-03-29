@@ -237,8 +237,10 @@ def main():
             #For the test set only, keep last 20 words in a new column, then remove them from original column
 #            test_set['True_end_lyrics'] = test_set['Lyric'].str.split().str[-20:].apply(' '.join)
 #            test_set['Lyric'] = test_set['Lyric'].str.split().str[:-20].apply(' '.join)
-            test_set['True_end_lyrics'] = [row[:250] for row in df['target']]
-            test_set['Lyric'] = [row[:250] for row in df['source']]
+            df1 = pd.read_csv("./prevdoc/"+filename)
+            df1 = df1.loc[~df1.index.isin(test_set.index)]
+            test_set['True_end_lyrics'] = [row[:250] for row in df1['target']]
+            test_set['Lyric'] = [row[:250] for row in df1['source']]
             
             ckpt_dir = './checkpoint_files_2/'+user+'_gpt.pt'
             if exists(ckpt_dir):
