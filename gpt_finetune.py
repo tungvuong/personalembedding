@@ -203,8 +203,8 @@ def main():
     for filename in os.listdir("./prevdoc"):
         if filename.endswith(".csv"):
             user = filename.replace('.csv','')
-            if user in suggestions.keys():
-                continue
+#            if user in suggestions.keys():
+#                continue
             suggestions[user] = []
             ratio = 0.7
             if user in ['D43D7EC3E0C2']:
