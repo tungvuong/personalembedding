@@ -31,7 +31,7 @@ import csv
 
 class SongLyrics(Dataset):
     
-    def __init__(self, control_code, truncate=False, gpt2_type="gpt2", max_length=2024, df=None):
+    def __init__(self, control_code, truncate=False, gpt2_type="gpt2", max_length=1024, df=None):
 
         self.tokenizer = GPT2Tokenizer.from_pretrained(gpt2_type)
         self.lyrics = []
@@ -215,7 +215,12 @@ def main():
  #           pred_index = allindex[int(len(allindex)*ratio):]
             df = pd.read_csv("./prevdoc/"+filename)
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
-#            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 250)]
+#            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 150)]
+            _daf = []
+
+            for row in df['Lyric']:
+                _daf.append(row[:1000])
+            df = pd.DataFrame({"Lyric":_daf})  
             print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
