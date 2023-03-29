@@ -219,7 +219,7 @@ def main():
             _daf = []
 
             for row in df['Lyric']:
-                _daf.append(row[:1000])
+                _daf.append(row[:800])
             df = pd.DataFrame({"Lyric":_daf})  
             print(len(df["Lyric"]))
             
