@@ -217,9 +217,9 @@ def main():
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
 #            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 150)]
             _daf = []
-
-            for row in df['Lyric']:
-                _daf.append(row[:500])
+            
+            for i in range(len(df)):
+                _daf.append(df['source'][i][:250]+". "+df['target'][i][:250])
             df = pd.DataFrame({"Lyric":_daf})  
             print(len(df["Lyric"]))
             
