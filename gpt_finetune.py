@@ -216,6 +216,7 @@ def main():
             df = pd.read_csv("./prevdoc/"+filename)
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
             print(len(df["Lyric"]))
+            dataset = SongLyrics(df['Lyric'], truncate=True, gpt2_type="gpt2")
             
             #Create a very small test set to compare generated text with the reality
             test_set = df.sample(n = 100)
