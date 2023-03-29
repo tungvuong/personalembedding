@@ -205,7 +205,7 @@ def main():
             user = filename.replace('.csv','')
 #            if user in suggestions.keys():
 #                continue
-            suggestions[user] = []
+#            suggestions[user] = []
             ratio = 0.7
             if user in ['D43D7EC3E0C2']:
                 ratio = 0.85
