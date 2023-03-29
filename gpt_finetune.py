@@ -210,12 +210,12 @@ def main():
             if user in ['D43D7EC3E0C2']:
                 ratio = 0.85
             print('--------------',user,ratio,'----------')
-            allindex = queryindex[filename.replace('.csv','')]
-            splitindex = allindex[int(len(allindex)*ratio)]
-            pred_index = allindex[int(len(allindex)*ratio):]
+ #           allindex = queryindex[filename.replace('.csv','')]
+ #           splitindex = allindex[int(len(allindex)*ratio)]
+ #           pred_index = allindex[int(len(allindex)*ratio):]
             df = pd.read_csv("./prevdoc/"+filename)
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
-            
+            print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
             test_set = df.sample(n = 100)
