@@ -31,7 +31,7 @@ import csv
 
 class SongLyrics(Dataset):
     
-    def __init__(self, control_code, truncate=False, gpt2_type="gpt2", max_length=1024, df=None):
+    def __init__(self, control_code, truncate=False, gpt2_type="gpt2", max_length=2024, df=None):
 
         self.tokenizer = GPT2Tokenizer.from_pretrained(gpt2_type)
         self.lyrics = []
@@ -62,7 +62,7 @@ def pack_tensor(new_tensor, packed_tensor, max_seq_len):
         return packed_tensor, True, None
 def train(
     dataset, model, tokenizer,
-    batch_size=4, epochs=20, lr=2e-5,
+    batch_size=2, epochs=20, lr=2e-5,
     max_seq_len=400, warmup_steps=200,
     gpt2_type="gpt2", output_dir=".", output_prefix="wreckgar",
     test_mode=False,save_model_on_epoch=False,
