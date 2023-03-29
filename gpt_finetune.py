@@ -264,7 +264,12 @@ def main():
             test_set['Generated_lyrics'] = my_generations
             
             for i in range(len(test_set)):
+                print('Generated: ')
                 print(test_set['Generated_lyrics'][i])
+                print('True: ')
+                print(test_set['True_end_lyrics'][i])
+                print('-------------------- ')
+                
         break
 
 if __name__ == '__main__':
