@@ -242,8 +242,8 @@ def main():
             df1 = df1.loc[~df1.index.isin(test_set1.index)]
             test_set1 = test_set1.reset_index()
             df1 = df1.reset_index()
-            test_set['True_end_lyrics'] = [df1['target'][i][:250] for i in range(len(df1))]
-            test_set['Lyric'] = [df1['source'][i][:250] for i in range(len(df1))]
+            test_set['True_end_lyrics'] = [test_set1['target'][i][:250] for i in range(len(test_set1))]
+            test_set['Lyric'] = [test_set1['source'][i][:250] for i in range(len(test_set1))]
             
             ckpt_dir = './checkpoint_files_2/'+user+'_gpt.pt'
             if exists(ckpt_dir):
