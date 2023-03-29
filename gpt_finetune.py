@@ -215,7 +215,7 @@ def main():
  #           pred_index = allindex[int(len(allindex)*ratio):]
             df = pd.read_csv("./prevdoc/"+filename)
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
-            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 350)]
+            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 250)]
             print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
