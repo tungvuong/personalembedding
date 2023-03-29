@@ -62,7 +62,7 @@ def pack_tensor(new_tensor, packed_tensor, max_seq_len):
         return packed_tensor, True, None
 def train(
     dataset, model, tokenizer,
-    batch_size=16, epochs=20, lr=2e-5,
+    batch_size=4, epochs=20, lr=2e-5,
     max_seq_len=400, warmup_steps=200,
     gpt2_type="gpt2", output_dir=".", output_prefix="wreckgar",
     test_mode=False,save_model_on_epoch=False,
@@ -215,7 +215,7 @@ def main():
  #           pred_index = allindex[int(len(allindex)*ratio):]
             df = pd.read_csv("./prevdoc/"+filename)
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
-            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 250)]
+#            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 250)]
             print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
