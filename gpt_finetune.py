@@ -198,8 +198,8 @@ def main():
 #        print(suggestions.keys())
 #    except:
 #        print('FILE NOT FOUND')
-#    with open('./queryindex.json') as json_file:
-#        queryindex = json.load(json_file)
+    with open('./queryindex.json') as json_file:
+        queryindex = json.load(json_file)
     for filename in os.listdir("./prevdoc"):
         if filename.endswith(".csv"):
             user = filename.replace('.csv','')
@@ -210,14 +210,13 @@ def main():
             if user in ['D43D7EC3E0C2']:
                 ratio = 0.85
             print('--------------',user,ratio,'----------')
- #           allindex = queryindex[filename.replace('.csv','')]
- #           splitindex = allindex[int(len(allindex)*ratio)]
- #           pred_index = allindex[int(len(allindex)*ratio):]
+            allindex = queryindex[filename.replace('.csv','')]
+            splitindex = allindex[int(len(allindex)*ratio)]
+            pred_index = allindex[int(len(allindex)*ratio):]
             df = pd.read_csv("./prevdoc/"+filename)
             df["Lyric"] = df[["source", "target"]].apply(". ".join, axis=1)
 #            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 150)]
-            _daf = []
-            
+            _daf = []           
             for i in range(len(df)):
                 _daf.append(df['source'][i][:250]+". "+df['target'][i][:250])
             df = pd.DataFrame({"Lyric":_daf})  
@@ -237,13 +236,8 @@ def main():
             #For the test set only, keep last 20 words in a new column, then remove them from original column
 #            test_set['True_end_lyrics'] = test_set['Lyric'].str.split().str[-20:].apply(' '.join)
 #            test_set['Lyric'] = test_set['Lyric'].str.split().str[:-20].apply(' '.join)
-            df1 = pd.read_csv("./prevdoc/"+filename)
-            test_set1 = df1.sample(n = 100)
-            df1 = df1.loc[~df1.index.isin(test_set1.index)]
-            test_set1 = test_set1.reset_index()
-            df1 = df1.reset_index()
-            test_set['True_end_lyrics'] = [test_set1['target'][i][:250] for i in range(len(test_set1))]
-            test_set['Lyric'] = [test_set1['source'][i][:250] for i in range(len(test_set1))]
+            test_set['True_end_lyrics'] = [test_set['target'][i][:250] for i in range(len(test_set))]
+            test_set['Lyric'] = [test_set['source'][i][:250] for i in range(len(test_set))]
             
             ckpt_dir = './checkpoint_files_2/'+user+'_gpt.pt'
             if exists(ckpt_dir):
@@ -275,7 +269,7 @@ def main():
             for i in range(len(test_set)):
                 print('Generated: ')
                 print(test_set['Generated_lyrics'][i])
-                print('True: ')
+                print('Actual: ')
                 print(test_set['True_end_lyrics'][i])
                 print('-------------------- ')
                 
