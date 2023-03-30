@@ -287,7 +287,7 @@ def main():
                                           test_set['source'][i],i+2+pred_index[0]])
         with open('./gpt.json', 'w') as outfile:
             json.dump(suggestions, outfile)
-        break
+        #break
 
 if __name__ == '__main__':
     # freeze_support() here if program needs to be frozen
