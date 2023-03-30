@@ -219,7 +219,13 @@ def main():
             _daf = []           
             for i in range(len(df)):
                 _daf.append(df['source'][i][:250]+". "+df['target'][i][:250])
-            df = pd.DataFrame({"Lyric":_daf})  
+            _daf_source = []           
+            for i in range(len(df)):
+                _daf_source.append(df['source'][i][:250])
+            _daf_target = []           
+            for i in range(len(df)):
+                _daf_target.append(df['target'][i][:250])
+            df = pd.DataFrame({"Lyric":_daf, "target":_daf_target, "source":_daf_source})  
             print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
