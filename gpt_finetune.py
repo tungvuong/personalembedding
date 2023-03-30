@@ -51,7 +51,7 @@ class SongLyrics(Dataset):
     def __getitem__(self, item):
         return self.lyrics[item]
 
-#Accumulated batch size (since GPT2 is so big)
+# Accumulated batch size (since GPT2 is so big)
 def pack_tensor(new_tensor, packed_tensor, max_seq_len):
     if packed_tensor is None:
         return new_tensor, True, None
@@ -191,21 +191,21 @@ def main():
     torch.cuda.empty_cache()
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
-#    suggestions = {}
-#    try:
-#        with open('./nofinetune_embeddings.json', 'r') as f:
-#            suggestions = json.load(f)
-#        print(suggestions.keys())
-#    except:
-#        print('FILE NOT FOUND')
+    suggestions = {}
+    try:
+        with open('./gpt.json', 'r') as f:
+            suggestions = json.load(f)
+        print(suggestions.keys())
+    except:
+        print('FILE NOT FOUND')
     with open('./queryindex.json') as json_file:
         queryindex = json.load(json_file)
     for filename in os.listdir("./prevdoc"):
         if filename.endswith(".csv"):
             user = filename.replace('.csv','')
-#            if user in suggestions.keys():
-#                continue
-#            suggestions[user] = []
+            if user in suggestions.keys():
+                continue
+            suggestions[user] = []
             ratio = 0.7
             if user in ['D43D7EC3E0C2']:
                 ratio = 0.85
@@ -225,11 +225,14 @@ def main():
             _daf_target = []           
             for i in range(len(df)):
                 _daf_target.append(df['target'][i][:250])
-            df = pd.DataFrame({"Lyric":_daf, "target":_daf_target, "source":_daf_source})  
+            _daf_title = []           
+            for i in range(len(df)):
+                _daf_title.append(df['title'][i])
+            df = pd.DataFrame({"Lyric":_daf, "target":_daf_target, "source":_daf_source, "title":_daf_title})  
             print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
-            test_set = df.sample(n = 100)
+            test_set = df.sample(n = pred_index[0])
             df = df.loc[~df.index.isin(test_set.index)]
 
             #Reset the indexes
@@ -278,7 +281,12 @@ def main():
                 print('Actual: ')
                 print(test_set['True_end_lyrics'][i])
                 print('-------------------- ')
-                
+                suggestions[user].append([test_set['title'][i],
+                                          test_set['True_end_lyrics'][i],
+                                          test_set['Generated_lyrics'][i],
+                                          test_set['source'][i],i+2+pred_index[0]])
+        with open('./gpt.json', 'w') as outfile:
+            json.dump(suggestions, outfile)
         break
 
 if __name__ == '__main__':
