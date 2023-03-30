@@ -38,7 +38,7 @@ class SongLyrics(Dataset):
 
         for row in df['Lyric']:
             self.lyrics.append(torch.tensor(
-                self.tokenizer.encode(f"<|{control_code}|>{row[:max_length]}<|endoftext|>")
+                self.tokenizer.encode(f"<|{control_code}|>{row[:max_length]}<|endoftext|>",max_length=max_length)
             ))
                 
         if truncate:
@@ -218,13 +218,13 @@ def main():
 #            df = df[df['Lyric'].apply(lambda x: len(x.split(' ')) < 150)]
             _daf = []           
             for i in range(len(df)):
-                _daf.append(df['source'][i][:250]+". "+df['target'][i][:200])
+                _daf.append(df['source'][i][:250]+". "+df['target'][i][:250])
             _daf_source = []           
             for i in range(len(df)):
                 _daf_source.append(df['source'][i][:250])
             _daf_target = []           
             for i in range(len(df)):
-                _daf_target.append(df['target'][i][:200])
+                _daf_target.append(df['target'][i][:250])
             _daf_title = []           
             for i in range(len(df)):
                 _daf_title.append(df['title'][i])
