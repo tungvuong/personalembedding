@@ -232,7 +232,7 @@ def main():
             print(len(df["Lyric"]))
             
             #Create a very small test set to compare generated text with the reality
-            test_set = df.sample(n = pred_index[0])
+            test_set = df.sample(n = len(df["Lyric"])-pred_index[0])
             df = df.loc[~df.index.isin(test_set.index)]
 
             #Reset the indexes
