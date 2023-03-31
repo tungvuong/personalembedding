@@ -52,13 +52,22 @@ class LitModel(pl.LightningModule):
 
     if self.hparams.freeze_embeds:
       self.freeze_embeds()
+
+  def freeze_params(self, model):
+    for param in model.parameters():
+      param.requires_grad = False
   
   def freeze_embeds(self):
     ''' freeze the positional embedding parameters of the model; adapted from finetune.py '''
-    freeze_params(self.model.model.shared)
-    for d in [self.model.model.encoder, self.model.model.decoder]:
-      freeze_params(d.embed_positions)
-      freeze_params(d.embed_tokens)
+    try:
+      freeze_params(self.model.model.shared)
+      for d in [self.model.encoder, self.model.decoder]:
+        freeze_params(d.embed_positions)
+        freeze_params(d.embed_tokens)
+    except AttributeError:
+      self.freeze_params(self.model.shared)
+      for d in [self.model.encoder, self.model.decoder]:
+        self.freeze_params(d.embed_tokens)
 
   # Do a forward pass through the model
   def forward(self, input_ids, **kwargs):
