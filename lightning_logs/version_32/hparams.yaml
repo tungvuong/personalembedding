@@ -1,0 +1,3 @@
+eval_beams: 4
+freeze_embeds: true
+freeze_encoder: true
