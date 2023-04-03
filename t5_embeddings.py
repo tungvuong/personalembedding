@@ -35,6 +35,7 @@ import argparse
 #tokenizer = ToktokTokenizer()
 #stopword_list = nltk.corpus.stopwords.words('english')
 #w2vmodel = gensim.models.KeyedVectors.load_word2vec_format('/wrk-vakka/users/vuong/music/GoogleNews-vectors-negative300.bin', binary=True)
+#os.environ['CURL_CA_BUNDLE'] = ''
 
 class LitModel(pl.LightningModule):
   # Instantiate the model
@@ -406,7 +407,7 @@ def main():
             pred_index = allindex[int(len(allindex)*ratio):]
             # Load the data into the model for training
             summary_data = SummaryDataModule(tokenizer, './prevdoc/'+filename,
-                                             batch_size = 14, num_examples = splitindex)
+                                             batch_size = 8, num_examples = splitindex)
 
             model = LitModel(learning_rate = 2e-5, tokenizer = tokenizer, model = bart_model, hparams = hparams)
 
